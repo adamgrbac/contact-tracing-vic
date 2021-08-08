@@ -1,6 +1,6 @@
-# QLD Health COVID-19 Contact Tracing Emailer
+# VIC Health COVID-19 Contact Tracing Emailer
 
-This project checks for new / updated locations on the QLD Health COVID-19 Contact Tracing [site](https://www.qld.gov.au/health/conditions/health-alerts/coronavirus-covid-19/current-status/contact-tracing), and emails the results to a distribution list.
+This project checks for new / updated locations on the VIC Health COVID-19 Contact Tracing [site](https://www.coronavirus.vic.gov.au/exposure-sites), and emails the results to a distribution list.
 
 It was a built as a bit of a time-saver so I didn't have to keep checking the website for updates, and was also a good way to explore the [yagmail](https://pypi.org/project/yagmail/) package in python.
 
@@ -14,13 +14,13 @@ It was a built as a bit of a time-saver so I didn't have to keep checking the we
 
 ## Scripts
 
-* contact-tracing-email.py - The main script that does the heavy lifting.
-	*  Example usage - `python contact-tracing-email.py`
+* contact-tracing-vic.py - The main script that does the heavy lifting.
+	*  Example usage - `python contact-tracing-vic.py`
 * utils.py - Some helper functions to clean up the code, imported as a package.
 
 ## Packages Used
 
-* bs4
+* datetime
 * pandas
 * requests
 * sqlite3
