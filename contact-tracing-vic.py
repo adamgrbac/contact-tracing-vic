@@ -46,7 +46,7 @@ if len(new_records) > 0:
         contents.append(utils.htmlify(new_records))
 
     # Send email to dist list
-    yag.send(bcc=email_config["dist_list"], subject="New Contact Tracing Locations!", contents=contents)
+    yag.send(bcc=email_config["dist_list"], subject="New VIC Contact Tracing Locations!", contents=contents)
 
     # Insert new records into database to mark them as processed
     new_records.to_sql("contact_tracing", con, if_exists="append", index=False)
