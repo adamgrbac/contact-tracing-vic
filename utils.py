@@ -1,7 +1,7 @@
 import pandas as pd
 import sqlite3
 import requests
-
+from datetime import datetime
 
 def get_data() -> list:
 
@@ -82,7 +82,7 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df["data_suburb"] = df["Suburb"]
     df["data_datetext"] = pd.to_datetime(df["Exposure_date"], format="%d/%m/%Y").dt.strftime("%A %d %B %Y")
     df["data_timetext"] = df["Exposure_time"]
-    df["data_added"] = df.apply(lambda row: f"{row['Added_date']} {row['Added_time']}", axis=1)
+    df["data_added"] = df.apply(lambda row: f"{row['Added_date']} {row['Added_time'] if row['Added_time'] else '00:00:00'}", axis=1)
     df["data_added"] = pd.to_datetime(df["data_added"], format="%d/%m/%Y %H:%M:%S")
 
     df = df.drop(col_names, axis=1)
