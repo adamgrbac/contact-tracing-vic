@@ -28,9 +28,6 @@ if not max_time:
 res_dicts = utils.get_data()
 
 df = pd.DataFrame(res_dicts)
-print(df.columns)
-print(df)
-print(df[(df["Advice_title"].isnull())])
 df = utils.clean_dataframe(df)
 
 # Get records that have appeared since last entry in the database
