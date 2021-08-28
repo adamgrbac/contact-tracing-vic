@@ -28,6 +28,9 @@ if not max_time:
 res_dicts = utils.get_data()
 
 df = pd.DataFrame(res_dicts)
+print(df.columns)
+print(df)
+print(df[(df["Advice_title"].isnull())])
 df = utils.clean_dataframe(df)
 
 # Get records that have appeared since last entry in the database
@@ -44,6 +47,8 @@ if len(new_records) > 0:
     if len(new_records) > 0:
         contents.append("New / Updated Contact Tracing Locations added to the website:")
         contents.append(utils.htmlify(new_records))
+        
+    contents.append('<br><br><br>If you wish to unsubscribe from this service, click <a href="https://covidmailer.au.ngrok.io/unsubscribe">here</a> and fill out the form.')
 
     # Send email to dist list
     yag.send(bcc=email_config["dist_list"], subject="New VIC Contact Tracing Locations!", contents=contents)
