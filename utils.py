@@ -53,11 +53,14 @@ def htmlify(df: pd.DataFrame) -> str:
     Returns:
         output: str - html string
     """
-
-    output = "<ul>"
-    for row in df.to_dict(orient="records"):
-        output += f"<li>({row['severity']}) {row['data_location']}, {row['data_suburb']} on {row['data_datetext']} between {row['data_timetext']}</li>"
-    output += "</ul>"
+    df = df.sort_values(["data_suburb"])
+    output = ""
+    for suburb in list(df["data_suburb"].unique()):
+        output += f"<h4>{suburb}</h4>"
+        output += "<ul>"
+        for row in df[df["data_suburb"] == suburb].to_dict(orient="records"):
+            output += f"<li>({row['severity']}) {row['data_location']}, {row['data_suburb']} on {row['data_datetext']} between {row['data_timetext']}</li>"
+        output += "</ul>"
     return output
 
 
@@ -75,7 +78,7 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
     col_names = list(df.columns)
 
-    df["severity"] = df["Advice_title"].apply(lambda x:  x[:6])
+    df["severity"] = df["Advice_title"].apply(lambda x:  x[:6] if x else "Unspecified")
     df["data_date"] = pd.to_datetime(df["Exposure_date"], format="%d/%m/%Y")
     df["data_location"] = df["Site_title"]
     df["data_address"] = df["Site_streetaddress"]
