@@ -79,11 +79,11 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     col_names = list(df.columns)
 
     df["severity"] = df["Advice_title"].apply(lambda x:  x[:6] if x else "Unspecified")
-    df["data_date"] = pd.to_datetime(df["Exposure_date"], format="%d/%m/%Y")
+    df["data_date"] = df["Exposure_date"].apply(lambda x : pd.to_datetime(x if int(x.split('/')[2]) > 1900 else "/".join(x.split('/')[:2])+"/"+str(datetime.now().year),format="%d/%m/%Y"))
     df["data_location"] = df["Site_title"]
     df["data_address"] = df["Site_streetaddress"]
     df["data_suburb"] = df["Suburb"]
-    df["data_datetext"] = pd.to_datetime(df["Exposure_date"], format="%d/%m/%Y").dt.strftime("%A %d %B %Y")
+    df["data_datetext"] = df["Exposure_date"].apply(lambda x : pd.to_datetime(x if int(x.split('/')[2]) > 1900 else "/".join(x.split('/')[:2])+"/"+str(datetime.now().year), format="%d/%m/%Y")).dt.strftime("%A %d %B %Y")
     df["data_timetext"] = df["Exposure_time"]
     df["data_added"] = df.apply(lambda row: f"{row['Added_date']} {row['Added_time'] if row['Added_time'] else '00:00:00'}", axis=1)
     df["data_added"] = pd.to_datetime(df["data_added"], format="%d/%m/%Y %H:%M:%S")
